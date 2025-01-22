@@ -13,18 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model product {
-  id  Int @id @default(autoincrement())
-  title String
-  message String
-  userId Int @unique(map: "userId")
+model User {
+  username String @id @db.VarChar(100)
+  password String @db.VarChar(100)
+  name String @db.VarChar(100)
+  contact Contact[]
+
+  @@map("users")
 }
 
-model User{
+model Contact {
   id Int @id @default(autoincrement())
-  username String
-  email String
-  pass String
-  isAdmin Boolean? @default(false)
-  createdAt DateTime?
+  number String @db.VarChar(20)
+  name String @db.VarChar(100)
+  userId String @db.VarChar(100)
+  user User @relation(fields: [userId], references: [username])
+  addres Address[]
+
+  @@map("contacts")
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+  country String @db.VarChar(50)
+  province String? @db.VarChar(100)
+  city String? @db.VarChar(50)
+  contactId Int 
+  contact Contact @relation(fields: [contactId], references: [id])
+
+  @@map("adresses")
 }

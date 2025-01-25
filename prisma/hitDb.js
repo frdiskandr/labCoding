@@ -13,7 +13,7 @@ const showUser = () => {
 }
 
 const generateUser = async () => {
-    for(let i = 10000; i <= 100000000000; i++){
+    for(let i = 1; i <= 1000; i++){
         const user = {
             username : `user${i}`,
             password : `password${i}`,
@@ -53,14 +53,21 @@ const login = async (user) => {
     }else{
         console.log("failed")
     }
-
-
 }
 
-const user = {
-    username: "regis",
-    password: "1234s",
-    name: "from test"
+const generateContact = async (idUser) => {
+    for (let i = 0; i < 10; i++){
+        const contact = {
+            name : `contact${i}`,
+            number: `number${i}`,
+            userId : idUser
+        }
+        try {
+            await prisma.contact.create({data: contact})
+        }catch(error){
+            console.error(error)
+        }
+    }
 }
 
-login(user)
+await prisma.user.deleteMany();

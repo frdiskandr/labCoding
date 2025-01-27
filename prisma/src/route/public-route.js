@@ -5,6 +5,7 @@ const publicRoute = express.Router();
 
 publicRoute.post("/api/register", userController.register);
 publicRoute.post("/api/login", userController.login);
+// publicRoute.get('/user',userController.getUser);
 
 publicRoute.get("/api/register", (req, res) => {
   res.status(200).json({ message: "ini register" });

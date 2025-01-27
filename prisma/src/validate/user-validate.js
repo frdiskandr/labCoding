@@ -11,4 +11,21 @@ const loginUserValidate = Joi.object({
   password: Joi.string().required(),
 });
 
-export default { registerUserValidate, loginUserValidate };
+const getUserValidate = Joi.object({
+  username: Joi.string().required(),
+  password: Joi.string().optional(),
+  name: Joi.string().optional(),
+});
+
+const updateUserValidate = Joi.object({
+  username: Joi.string().required(),
+  password: Joi.string().optional(),
+  name: Joi.string().optional(),
+})
+
+export default { 
+  registerUserValidate, 
+  loginUserValidate,
+  getUserValidate,
+  updateUserValidate
+};

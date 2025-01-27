@@ -54,11 +54,12 @@ const getContact = async (user) => {
 }
 
 const serchContact = async (user, req) => {
-    const request = validate(contactValidate.serchContactValidate, req.params);
+    const request = validate(contactValidate.serchContactValidate, req.body);
+    console.warn(request)
 
     const filter = [];
     filter.push({
-        username: user
+        userId: user
     })
 
     if(request.name){
@@ -78,17 +79,17 @@ const serchContact = async (user, req) => {
             }
         )}
 
+        console.warn(filter)
+
     const contacts = await prisma.contact.findMany({
-        where:{
-            AND: filter
-        },
+        userId: user,
         take: request.size,
         skip: (request.page - 1) * request.size,
     })
 
     const totalItems = await prisma.contact.count({
         where:{
-            AND: filter
+           userId: user
         }
     })
 

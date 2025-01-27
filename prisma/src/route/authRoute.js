@@ -14,6 +14,6 @@ authRoute.get('/user/logout',controllerUser.logOut);
 authRoute.post('/contact', controllerContact.create);
 authRoute.get('/contact', controllerContact.get);
 authRoute.get('/contact/:id', controllerContact.getById);
-authRoute.get('/contact/search', controllerContact.serchContack);
+authRoute.get('/contact/serch/param', controllerContact.serchContack);
 
 export default authRoute;

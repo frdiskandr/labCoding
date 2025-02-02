@@ -1,22 +1,11 @@
 import { NextResponse } from "next/server";
+import Logger from "@/logger/logger";
 
-async function GET(request) {
-    const req = await request;
-    console.log(req);
-
-    const result = {
-        status: 200,
-        message: "Success",
-        data: req,
-    };
-    return NextResponse.json(result);
+export async function GET(){
+    try {
+        return NextResponse.json({message: "Hello", statusbar: 201})
+    } catch (error) {
+        Logger.error(error)
+        return NextResponse.json(error)
+    }
 }
-
-async function POST(Request) {
-    const req = await Request;
-    console.log(req.json());
-
-    return NextResponse.json(req);
-}
-
-export { GET, POST };

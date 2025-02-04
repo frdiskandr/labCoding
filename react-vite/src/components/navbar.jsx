@@ -12,13 +12,8 @@ function Navbar() {
         {/*Desktop version*/}
 
         <div className="hidden sm:block">
-            <div className="container flex flex-col w-screen">
-                <h1 className="text-3xl text-blue-200">Desktop Version</h1>
-                <ul className="flex flex-row gap-5 *:list-none *:text-white bg-black">
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Product</li>
-                </ul>
+            <div className="container bg-black text-white fixed mx-auto">
+                <h1 className="w-screen h-10">Helo dunia</h1>
             </div>
         </div>
 

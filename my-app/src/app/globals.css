@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 :root{
-  --text : #FAFAFA
+  --text : #FAFAFA;
+  --background-c : black;
 }
 
 body {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
   color: Var(--text);
+  background-color: var(--background-c);
 }

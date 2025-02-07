@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import Logger from "@/logger/logger";
+import Logger from "@/logger/logger.js";
 
 export async function GET(){
     try {
@@ -9,3 +9,4 @@ export async function GET(){
         return NextResponse.json(error)
     }
 }
+

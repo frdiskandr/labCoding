@@ -1,5 +1,5 @@
-function Layout ({children, list}) {
-    "use client"
+'use client'
+function Layout ({children,list}) {
     return (
         <>
         <h1>ini layout baru</h1>

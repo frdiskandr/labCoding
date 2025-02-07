@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
+
 const schema = Joi.object({
     title: Joi.string().required().messages({
         "string.empty": "butuh title",
@@ -20,6 +21,7 @@ const errMessage = ({ message }) => {
 };
 
 export default function Form() {
+
     const {
         register,
         handleSubmit,
@@ -28,10 +30,19 @@ export default function Form() {
         resolver: joiResolver(schema),
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
-        localStorage.setItem("data", JSON.stringify(data));
+        const res = await fetch("http://localhost:3000/api/data", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        console.log(res);
     };
+
+    
 
     return (
         <>

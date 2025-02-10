@@ -21,7 +21,6 @@ const errMessage = ({ message }) => {
 };
 
 export default function Form() {
-
     const {
         register,
         handleSubmit,
@@ -41,8 +40,6 @@ export default function Form() {
         });
         console.log(res);
     };
-
-    
 
     return (
         <>

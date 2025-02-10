@@ -1,9 +1,22 @@
+'use client'
 import Link from "next/link";
+import useGlobalState from "@/globalState/isLoading";
 
 export default function Home() {
+    const {isLoading, setIsLoading} = useGlobalState();
+
+    const handleLoading = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            console.log(isLoading)
+            setIsLoading(false);
+            console.log(isLoading)
+        }, 2000);
+    }
+
     return (
         <>
-            <div className="container fixed bg-slate-950 flex justify-center p-3">
+            {/* <div className="container fixed bg-slate-950 flex justify-center p-3">
                 <div className="flex justify-end w-full">
                     <div className="menu p-1 flex flex-row gap-2 items-center relative">
                         <span className="text-xl">Menu</span>
@@ -40,7 +53,12 @@ export default function Home() {
                         </Link>
                     </ul>
                 </nav>
+            </div> */}
+            <div>
+                <button onClick={handleLoading}>Click</button>
+                {isLoading ? <div>Loading...</div> : null}
             </div>
+
         </>
     );
 }

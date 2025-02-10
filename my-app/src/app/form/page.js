@@ -9,7 +9,7 @@ const schema = Joi.object({
         "any.required": "butuh title",
     }),
     description: Joi.string().required(),
-    date: Joi.date().default(new Date()).optional(),
+    date: Joi.date().default(new Date()).optional() ,
 });
 
 const errMessage = ({ message }) => {

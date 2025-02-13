@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import Logger from "@/logger/logger.js";
+import Logger from "@/utils/logger/logger.js";
 
 export async function GET(){
     try {

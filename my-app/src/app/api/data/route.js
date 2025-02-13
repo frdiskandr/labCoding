@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import { NextResponse } from "next/server";
 
 
-async function GET() {
+export async function GET() {
     try {
         const data = await fs.readFile("data.json", "utf-8");
         if (!data) {
@@ -10,18 +10,18 @@ async function GET() {
         }
         return NextResponse.json(JSON.parse(data));
     } catch (error) {
-        return NextResponse.json(error);
+        return NextResponse.json({message : error.message});
     }
 }
 
-async function POST(request) {
+export async function POST(request) {
     try {
         const data = await request.json();
-        await fs.writeFile("data.json", JSON.stringify(data));
+        const oldData = await fs.readFile("data.json", "utf-8");
+        const newData = [...JSON.parse(oldData), data];
+        await fs.writeFile("data.json", JSON.stringify(newData));
         return NextResponse.json({ data, message: "success" });
     } catch (error) {
         return NextResponse.json(error);
     }
 }
-
-export { GET, POST };

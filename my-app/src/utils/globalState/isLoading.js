@@ -1,10 +1,10 @@
 import { create} from "zustand"
 
-const useGlobalState = create((set) => ({
+const useLoading = create((set) => ({
     isLoading: false,
     setIsLoading: (state) => set(() => ({ isLoading: state})),
 }))
 
 
 
-export default useGlobalState;
+export default useLoading;

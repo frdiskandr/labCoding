@@ -1,9 +1,9 @@
-'use client';
-import useGlobalState from "@/globalState/isLoading";
+"use client";
 import Loading from "./loading";
+import useLoading from "@/utils/globalState/isLoading";
 
 function Navbar() {
-    const { isLoading, setIsLoading } = useGlobalState();
+    const { isLoading, setIsLoading } = useLoading();
 
     const handleLoading = () => {
         setIsLoading(true);
@@ -11,7 +11,7 @@ function Navbar() {
             console.log(isLoading);
             setIsLoading(false);
             console.log(isLoading);
-        }, 5000);
+        }, 3000);
     };
     return (
         <>
@@ -47,8 +47,11 @@ function Navbar() {
                             </ul>
                         </div>
                         <div className="flex items-center gap-4">
-                            <a href="#" onClick={handleLoading}
-                            className="text-white">
+                            <a
+                                href="/login"
+                                onClick={handleLoading}
+                                className="text-white"
+                            >
                                 Login
                             </a>
                             <a
@@ -61,7 +64,7 @@ function Navbar() {
                     </div>
                 </div>
             </nav>
-            {isLoading && <Loading/>}
+            {isLoading && <Loading />}
             {/* Navbar  Mobile View*/}
         </>
     );

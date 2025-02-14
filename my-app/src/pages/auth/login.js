@@ -2,7 +2,7 @@
 import Form from "@/components/layout/form";
 import Input from "@/components/atom/input";
 import { useForm } from "react-hook-form";
-import useLoading from "@/utils/globalState/isLoading";
+import useLoading from "@/hooks/globalState/isLoading";
 import Loading from "@/components/layout/loading";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";

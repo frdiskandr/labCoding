@@ -1,6 +1,6 @@
 "use client";
 import Loading from "./loading";
-import useLoading from "@/utils/globalState/isLoading";
+import useLoading from "@/hooks/globalState/isLoading";
 
 function Navbar() {
     const { isLoading, setIsLoading } = useLoading();

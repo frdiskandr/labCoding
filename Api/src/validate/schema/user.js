@@ -5,5 +5,6 @@ const UserSchema = yup.object({
     password: yup.string().required(),
 });
 
-export default UserSchema;
+
+export {UserSchema};
 

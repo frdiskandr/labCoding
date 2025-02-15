@@ -26,4 +26,5 @@ const login = async (req, res, next) => {
     }
 }
 
+
 export default { get, register, login };

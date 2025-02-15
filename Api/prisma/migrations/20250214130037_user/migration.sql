@@ -9,3 +9,4 @@ CREATE TABLE "User" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
+ALTER TABLE "User" REPLICA IDENTITY FULL;

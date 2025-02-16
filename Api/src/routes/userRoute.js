@@ -4,16 +4,13 @@ import AuthMiddleware from "../middleware/authMiddleware.js";
 
 const UserRoute = Router();
 
-UserRoute.get("/", (req, res) => {
-    res.status(200).json({ message: "User Route" });
-})
-UserRoute.post("/register", Controller.register);
-UserRoute.post("/login", Controller.login);
+UserRoute.post("/auth/register", Controller.register);
+UserRoute.post("/auth/login", Controller.login);
+
 
 UserRoute.use(AuthMiddleware);
-UserRoute.get("/profile/:id", (req, res) => {
-    const { id } = req.params;
-    res.status(200).json({ message: "User Profile", id });
-})
-
+UserRoute.get("/", Controller.getUser)
+UserRoute.put("/profile/update", Controller.updateProfile);
+UserRoute.post("/store/create", Controller.CreateStore);
+UserRoute.patch("/store/update", Controller.UpdateStore);
 export default UserRoute;

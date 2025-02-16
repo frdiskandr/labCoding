@@ -5,6 +5,16 @@ const UserSchema = yup.object({
     password: yup.string().required(),
 });
 
+const ProfileSchema = yup.object({
+    username: yup.string().required({message: "Username is required"}),
+    image : yup.string().optional(),
+    description: yup.string().optional()
+});
 
-export {UserSchema};
+const GetUserSchema = yup.object({
+    token: yup.string().required({message: "Token is required"}),
+    username: yup.string().required({message: "Username is required"}),
+})
+
+export {UserSchema, GetUserSchema, ProfileSchema};
 

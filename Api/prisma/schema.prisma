@@ -10,13 +10,56 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_LOCAL")
 }
 
 model User {
-  id Int @unique @default(autoincrement())
-  username String @db.VarChar()
-  password String 
-  role Boolean @default(false)
-  session String @default("")
+  id        String     @unique @default(uuid())
+  username  String     @unique @db.VarChar()
+  password  String
+  role      Boolean    @default(false)
+  session   String     @default("")
+  Profile   Profile?
+  Keranjang Keranjang?
+  Store     Store?
+}
+
+model Profile {
+  username    String @unique
+  user        User   @relation(fields: [username], references: [username])
+  image       String? @default("")
+  description String? @default("")
+}
+
+model Keranjang {
+  id        Int                 @unique @default(autoincrement())
+  userId    String              @unique
+  User      User                @relation(fields: [userId], references: [id])
+  Keranjang poolKeranjangUser[]
+}
+
+model poolKeranjangUser {
+  id          Int       @unique @default(autoincrement())
+  keranjangId Int
+  productId   String
+  keranjang   Keranjang @relation(fields: [keranjangId], references: [id])
+  quantity    Int
+}
+
+model Product {
+  id          String   @unique @default(uuid())
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [userId])
+  name        String
+  description String
+  price       Int @db.Integer
+  stock       Int
+}
+
+model Store {
+  id      Int       @unique @default(autoincrement())
+  userId  String    @unique
+  name    String
+  user    User      @relation(fields: [userId], references: [id])
+  Product Product[]
 }

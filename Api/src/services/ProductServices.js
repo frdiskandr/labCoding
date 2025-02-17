@@ -38,18 +38,33 @@ const GetAllProduct = async (req) => {
 };
 const UpdateProduct = async (req, id) => {
     const data = await Validate(UpdateProductSchema, req);
-    const response = await prisma.product.update({
-        where: { id: id },
-        data: {
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            stock: data.stock,
-        },
-    });
-    if (!response) throw new ResponseError(500, "database error");
-    response.message = "success update product";
-    return response;
+    try{
+        const response = await prisma.product.update({
+            where: { id: id },
+            data: {
+                name: data.name,
+                description: data.description,
+                price: data.price,
+                stock: data.stock,
+            },
+        });
+        if (!response) throw new ResponseError(500, "database error");
+        response.message = "success update product";
+        return response;
+    }catch(e){
+        throw new ResponseError(404, "product not found");
+    }
 };
 
-export default { CreateProduct, UpdateProduct, GetAllProduct };
+const DeleteProduct = async (id) => {
+    const response = await prisma.product.delete({
+        where: {
+            id: id
+        }
+    })
+    if (!response) throw new ResponseError(404, "product not found");
+    response.message = "success delete product";
+    return response
+}
+
+export default { CreateProduct, UpdateProduct, GetAllProduct, DeleteProduct };

@@ -1,0 +1,164 @@
+import android.app.Service;
+import android.content.Intent;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
+import android.os.IBinder;
+import android.util.Log;
+import android.view.InputDevice;
+import android.view.MotionEvent;
+import android.view.KeyEvent;
+import android.view.InputManager;
+import org.webrtc.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.io.*;
+import okhttp3.*;
+import fi.iki.elonen.NanoHTTPD;
+
+public class ScreenMirrorService extends Service {
+    private static final String TAG = "ScreenMirrorService";
+    private MediaProjectionManager mediaProjectionManager;
+    private MediaProjection mediaProjection;
+    private PeerConnectionFactory peerConnectionFactory;
+    private PeerConnection peerConnection;
+    private VideoCapturer videoCapturer;
+    private VideoTrack localVideoTrack;
+    private SurfaceTextureHelper surfaceTextureHelper;
+    private OkHttpClient client;
+    private WebSocket webSocket;
+    private InputManager inputManager;
+    private FileServer fileServer;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mediaProjectionManager = (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
+        inputManager = (InputManager) getSystemService(INPUT_SERVICE);
+        initializeWebRTC();
+        initializeWebSocket();
+        startFileServer();
+    }
+
+    private void startFileServer() {
+        try {
+            fileServer = new FileServer(8080);
+            fileServer.start();
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to start file server", e);
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        int resultCode = intent.getIntExtra("RESULT_CODE", -1);
+        Intent data = intent.getParcelableExtra("DATA_INTENT");
+
+        if (resultCode != -1 && data != null) {
+            mediaProjection = mediaProjectionManager.getMediaProjection(resultCode, data);
+            startScreenMirroring();
+        } else {
+            Log.e(TAG, "Invalid media projection parameters");
+        }
+        return START_STICKY;
+    }
+
+    private void initializeWebRTC() {
+        PeerConnectionFactory.initialize(PeerConnectionFactory.InitializationOptions.builder(this).createInitializationOptions());
+        peerConnectionFactory = PeerConnectionFactory.builder().createPeerConnectionFactory();
+    }
+
+    private void initializeWebSocket() {
+        client = new OkHttpClient();
+        Request request = new Request.Builder().url("ws://yourserver.com/signaling").build();
+        webSocket = client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onMessage(WebSocket webSocket, String text) {
+                handleSignalingMessage(text);
+            }
+        });
+    }
+
+    private void handleSignalingMessage(String message) {
+        try {
+            JSONObject json = new JSONObject(message);
+            String type = json.getString("type");
+            if ("file".equals(type)) {
+                String fileName = json.getString("fileName");
+                String fileData = json.getString("data");
+                saveFile(fileName, fileData);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error parsing signaling message", e);
+        }
+    }
+
+    private void saveFile(String fileName, String base64Data) {
+        try {
+            byte[] decodedBytes = Base64.getDecoder().decode(base64Data);
+            File file = new File(getExternalFilesDir(null), fileName);
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(decodedBytes);
+            }
+            Log.d(TAG, "File saved: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to save file", e);
+        }
+    }
+
+    private class FileServer extends NanoHTTPD {
+        public FileServer(int port) throws IOException {
+            super(port);
+        }
+
+        @Override
+        public Response serve(IHTTPSession session) {
+            String uri = session.getUri();
+            if (uri.startsWith("/download/")) {
+                String fileName = uri.substring(10);
+                File file = new File(getExternalFilesDir(null), fileName);
+                if (file.exists()) {
+                    try {
+                        FileInputStream fis = new FileInputStream(file);
+                        return newChunkedResponse(Response.Status.OK, "application/octet-stream", fis);
+                    } catch (IOException e) {
+                        return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/plain", "Failed to read file");
+                    }
+                } else {
+                    return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "File not found");
+                }
+            }
+            return newFixedLengthResponse(Response.Status.OK, "text/plain", "File Server Running");
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaProjection != null) {
+            mediaProjection.stop();
+        }
+        if (videoCapturer != null) {
+            try {
+                videoCapturer.stopCapture();
+            } catch (InterruptedException e) {
+                Log.e(TAG, "Error stopping capture", e);
+            }
+            videoCapturer.dispose();
+        }
+        if (peerConnectionFactory != null) {
+            peerConnectionFactory.dispose();
+        }
+        if (webSocket != null) {
+            webSocket.close(1000, "Service Stopped");
+        }
+        if (fileServer != null) {
+            fileServer.stop();
+        }
+    }
+}

@@ -1,0 +1,124 @@
+#include <iostream>
+#include <fstream>
+#include <thread>
+#include <string>
+#include <windows.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <opencv2/opencv.hpp>
+
+#pragma comment(lib, "ws2_32.lib")
+
+#define SERVER_IP "192.168.1.100" // Ganti dengan IP Android
+#define SERVER_PORT 8080
+#define BUFFER_SIZE 4096
+
+void receiveVideoStream() {
+    cv::Mat frame;
+    char buffer[BUFFER_SIZE];
+    WSADATA wsaData;
+    SOCKET sock;
+    struct sockaddr_in serverAddr;
+
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(SERVER_PORT);
+    inet_pton(AF_INET, SERVER_IP, &serverAddr.sin_addr);
+
+    if (connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Failed to connect to server!" << std::endl;
+        return;
+    }
+
+    std::vector<uchar> receivedData;
+    while (true) {
+        int bytesRead = recv(sock, buffer, BUFFER_SIZE, 0);
+        if (bytesRead <= 0) break;
+        receivedData.insert(receivedData.end(), buffer, buffer + bytesRead);
+        frame = cv::imdecode(receivedData, cv::IMREAD_COLOR);
+        if (!frame.empty()) {
+            cv::imshow("Screen Mirror", frame);
+            cv::waitKey(1);
+            receivedData.clear();
+        }
+    }
+    closesocket(sock);
+    WSACleanup();
+}
+
+void sendInputToAndroid(int x, int y, int action) {
+    WSADATA wsaData;
+    SOCKET sock;
+    struct sockaddr_in serverAddr;
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(SERVER_PORT);
+    inet_pton(AF_INET, SERVER_IP, &serverAddr.sin_addr);
+
+    if (connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Failed to connect to server for input!" << std::endl;
+        return;
+    }
+
+    std::string inputData = "{\"x\":" + std::to_string(x) + ",\"y\":" + std::to_string(y) + ",\"action\":" + std::to_string(action) + "}";
+    send(sock, inputData.c_str(), inputData.size(), 0);
+    closesocket(sock);
+    WSACleanup();
+}
+
+void sendFileToAndroid(const std::string& filePath) {
+    WSADATA wsaData;
+    SOCKET sock;
+    struct sockaddr_in serverAddr;
+    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(SERVER_PORT);
+    inet_pton(AF_INET, SERVER_IP, &serverAddr.sin_addr);
+
+    if (connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Failed to connect to server for file transfer!" << std::endl;
+        return;
+    }
+
+    std::ifstream file(filePath, std::ios::binary);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file!" << std::endl;
+        return;
+    }
+
+    char buffer[BUFFER_SIZE];
+    while (!file.eof()) {
+        file.read(buffer, BUFFER_SIZE);
+        send(sock, buffer, file.gcount(), 0);
+    }
+    file.close();
+    closesocket(sock);
+    WSACleanup();
+    std::cout << "File sent successfully!" << std::endl;
+}
+
+int main() {
+    std::thread videoThread(receiveVideoStream);
+    videoThread.detach();
+    
+    while (true) {
+        int choice;
+        std::cout << "Select option: 1) Send Input 2) Send File: ";
+        std::cin >> choice;
+        if (choice == 1) {
+            int x, y, action;
+            std::cout << "Enter input (x y action): ";
+            std::cin >> x >> y >> action;
+            sendInputToAndroid(x, y, action);
+        } else if (choice == 2) {
+            std::string filePath;
+            std::cout << "Enter file path: ";
+            std::cin >> filePath;
+            sendFileToAndroid(filePath);
+        }
+    }
+    return 0;
+}

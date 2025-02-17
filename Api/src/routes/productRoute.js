@@ -8,6 +8,7 @@ ProductRoute.use(AuthMiddleware);
 ProductRoute.get("/allproduct",Controller.GetAllProduct);
 ProductRoute.post("/product/create",Controller.CreateProduct);
 ProductRoute.put("/product/:id",Controller.UpdateProduct);
+ProductRoute.delete("/product/:id",Controller.DeleteProduct);
 
 
 export default ProductRoute;

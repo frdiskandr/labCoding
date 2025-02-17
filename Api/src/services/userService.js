@@ -6,13 +6,16 @@ import prisma from "../app/database.js";
 
 const RegisterUser = async (req) => {
     const res = await Validate(UserSchema, req);
-    res.session = uuid();
     const user = await prisma.user.count({ where: { username: res.username } });
     if (user) throw new ResponseError(400, "User already exist");
 
     const userData = await prisma.user.create({
-        data: res,
-        select: { id: true, username: true, session: true },
+        data: {
+            username: res.username,
+            password: res.password,
+            token: uuid(),
+        },
+        select: { id: true, username: true, token: true },
     });
 
     await prisma.profile.create({
@@ -42,8 +45,8 @@ const LoginUser = async (req) => {
     } else {
         const result = await prisma.user.update({
             where: { id: user.id },
-            data: { session: uuid() },
-            select: { id: true, username: true, session: true },
+            data: { token: uuid() },
+            select: { id: true, username: true, token: true },
         });
         return result;
     }
@@ -58,10 +61,16 @@ const GetUser = async (req) => {
         select:{
             id: true,
             username: true,
-            session: true,
+            token: true,
             Keranjang: true,
             Profile: true,
-            Store: true
+            Store: {
+                select: {
+                    name: true,
+                    userId: true,
+                    Product: true,
+                }
+            }
         }
     });
 

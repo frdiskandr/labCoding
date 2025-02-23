@@ -1,7 +1,9 @@
 function Header({}){
     return(
-        <header className="">
-
+        <header className="hidden sm:block">
+            Header
         </header>
     )
 }
+
+export default Header;

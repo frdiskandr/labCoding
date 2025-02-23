@@ -2,11 +2,20 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
+def generate_data():
+    np.random.seed(42)
+    ukuran_rumah = np.random.normal(loc=100, scale=40, size=5000)
+    ukuran_rumah = np.clip(ukuran_rumah, 30, 350)
+    ukuran_rumah = np.round(ukuran_rumah, 2)
+
+    return ukuran_rumah
+
+
 def main():
-    print("Hello World")
+    data_ukuran_rumah = generate_data()
     # Data contoh: ukuran rumah (m²) dan harga (dalam juta rupiah)
-    ukuran_rumah = np.array([50, 60, 80, 100, 120, 150]).reshape(-1, 1)  # fitur
-    harga_rumah = np.array([150, 180, 230, 280, 340, 420])              # target
+    ukuran_rumah = np.array(data_ukuran_rumah).reshape(-1, 1)  # fitur
+    harga_rumah = np.array(data_ukuran_rumah / 2)              # target
 
     # Membuat dan melatih model
     model = LinearRegression()

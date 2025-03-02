@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // routes public
-app.get("/", (req, res) => res.status(200).json({ message: "hello world" }));
+app.get("/", (req, res) => res.status(200).json({ message: "welcome to end point api Ecomerce powered by express" }));
 app.use(PublicRoute);
 app.use("/keranjang", KeranjangRoute);
 app.use('/user', UserRoute);

@@ -2,6 +2,8 @@ import Header from "../layout/header";
 import Image from "next/image";
 import StatusCod from "../ui/status/StatusCod";
 import Bracket from "../ui/status/bracket";
+import CardHead from "../ui/cardHeader";
+import CardCategory from "../ui/cardCategory";
 
 function HomePage() {
     return (
@@ -10,11 +12,25 @@ function HomePage() {
                 <Header />
             </div>
             <main>
-                <div className="lg:w-[1100px] w-full mx-auto flex flex-col relative p-4 gap-2">
+                <div className="lg:w-[1100px] w-full mx-auto flex flex-col relative p-4 gap-2 ">
                     <div className="container flex flex-row gap-2 mx-auto">
-                        <div id="left-content" className="w-[60%] bg-slate-500">
-                            <div className="w-full h-[235px] flex justify-center items-center text-black border">
-                                content
+                        <div id="left-content" className="w-[60%] bg-[#EE4D2D]">
+                            <div className="w-full h-full text-black border">
+                                <a
+                                    className="o5QY1J h-full"
+                                    href="/m/termurah-di-shopee"
+                                >
+                                    <div className="_b8dol Z4k0cq h-full">
+                                        <img
+                                            width="invalid-value"
+                                            height="invalid-value"
+                                            alt="Banner"
+                                            className="GhNXf3 cEoSnS TGZg9J w-full h-full "
+                                            style={{ objectFit: "contain" }}
+                                            src="https://cf.shopee.co.id/file/id-11134258-7rasd-m1dwe17djcvbd0_xxhdpi"
+                                        />
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div
@@ -23,209 +39,154 @@ function HomePage() {
                         >
                             <div className="bg-slate-500 h-1/2 border">
                                 <div className="flex justify-center items-center">
-                                    content side
+                                    <a
+                                        className="NMn0Ga"
+                                        href="/m/shopee-pilih-lokal"
+                                    >
+                                        <div className="_b8dol _lHr81 Z4k0cq">
+                                            <img
+                                                width="invalid-value"
+                                                height="invalid-value"
+                                                alt="Banner"
+                                                className="lpsdjq TGZg9J"
+                                                style={{ objectFit: "cover" }}
+                                                src="https://cf.shopee.co.id/file/id-11134258-7r98o-m0bdmvjtcuz013_xhdpi"
+                                            />
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                             <div className="bg-slate-500 h-1/2 border">
                                 <div className="flex justify-center">
-                                    content side
+                                    <a className="NMn0Ga" href="/m/barokah">
+                                        <div className="_b8dol _lHr81 Z4k0cq">
+                                            <img
+                                                width="invalid-value"
+                                                height="invalid-value"
+                                                alt="Banner"
+                                                className="lpsdjq TGZg9J"
+                                                style={{ objectFit: "cover" }}
+                                                src="https://cf.shopee.co.id/file/id-11134258-7rbk7-m6gmzy3h4zhpca_xhdpi"
+                                            />
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="container text-black flex justify-between overflow-x-hidden mx-auto">
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-9e96a5687ef3d55c05426b33e702be61_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Shopee Pilih Local
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-21067727429e50037f52d3bda8a8bcf6_xhdpi;"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Shopee Mall
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-4f6225c6af9676bb98b6ef90b5eea2c1_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Pulsa,Tagihan, dan Tiket
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-bc0d988b6f0265726005d7516d275e34_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            InFasion
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-973424e34266b401880d7dcc2d40156d_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Shopee Market
+                        </CardHead>
+                        {/* <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-11134258-7rasg-m4e22zjycay682_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Dikelola Shopee
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-11134258-7rase-m20j35or51a7bb_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Termurah Di Shopee
+                        </CardHead> */}
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-dd50489812b1eb792c5cfae00a3b512a_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Gratis ongkir dan voucher
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-a2dfaca803ad1b0a86141f5374419f99_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
+                            Shopee Barokah
+                        </CardHead>
+                        <CardHead
+                            img={
+                                "https://cf.shopee.co.id/file/id-50009109-b26e4a6a1add042d828b58143fceda1a_xhdpi"
+                            }
+                            url={"/"}
                         >
-                            card
-                        </div>
-                        <div
-                            id="card"
-                            className="h-24 flex justify-center bg-slate-700 min-w-24"
-                        >
-                            card
-                        </div>
+                            Semua Promo
+                        </CardHead>
                     </div>
                 </div>
 
                 <section id="category">
-                    <div className="lg:w-[1100px] w-full mx-auto bg-black container">
+                    <div className="lg:w-[1100px] w-full mx-auto bg-[#FFFFFF] container">
                         <span className="font-bold p-2 text-xl">Category</span>
-                        <div className="container flex flex-wrap bg-[#b1a5a3] h-[302px]">
+                        <div className="container flex flex-wrap h-[302px]">
                             <div
                                 id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
+                                className="w-[10%] h-1/2 flex justify-center items-center box-border p-2"
                             >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
-                            </div>
-                            <div
-                                id="card"
-                                className="w-[10%] h-1/2 bg-[#b1a5a3] flex justify-center items-center box-border p-2"
-                            >
-                                <div className="bg-[#F94F2F] w-full h-full"></div>
+                                <a
+                                    href="#"
+                                    className="w-full h-full text-black text-center"
+                                >
+                                    <picture class="axJD3V">
+                                        <source
+                                            srcSet="https://down-id.img.susercontent.com/file/dcd61dcb7c1448a132f49f938b0cb553@resize_w320_nl.webp 1x, https://down-id.img.susercontent.com/file/dcd61dcb7c1448a132f49f938b0cb553@resize_w640_nl.webp 2x"
+                                            type="image/webp"
+                                            className="axJD3V"
+                                        />
+                                        <img
+                                            width="320"
+                                            loading="lazy"
+                                            className="PndadC lazyload b0jgRH"
+                                            srcSet="https://down-id.img.susercontent.com/file/dcd61dcb7c1448a132f49f938b0cb553@resize_w320_nl 1x, https://down-id.img.susercontent.com/file/dcd61dcb7c1448a132f49f938b0cb553@resize_w640_nl 2x"
+                                            src="https://down-id.img.susercontent.com/file/dcd61dcb7c1448a132f49f938b0cb553"
+                                        />
+                                    </picture>
+                                    <span>Elektronik</span>
+                                </a>
+                                
                             </div>
                         </div>
                     </div>

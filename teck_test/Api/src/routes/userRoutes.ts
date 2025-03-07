@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 
 const UserRouter = Router();
 
@@ -25,7 +25,7 @@ const UserRouter = Router();
  *                     type: string
  *                     example: "John Doe"
  */
-UserRouter.get("/users", (req, res) => {
+UserRouter.get("/", (req: Request, res: Response) => {
   res.json([{ id: 1, name: "John Doe" }]);
 });
 

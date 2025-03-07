@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import setupSwager from './swagger';
 import UserRouter from '../routes/userRoutes';
+import BookRouter from '../routes/bookRouter';
+import MemberRouter from '../routes/memberRouter';
 
 dotenv.config();
 
@@ -16,12 +18,8 @@ setupSwager(app);
 //routes
 app.use(UserRouter);
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({
-    message: "hei guyss"
-  })
-  return;
-});
+app.use("/books", BookRouter)
+app.use("/member", MemberRouter)
 
 
 export default app;

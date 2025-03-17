@@ -1,5 +1,5 @@
-import app from "./src/app/api.js";
-import Logger from "./src/app/logger.js";
+import app from "../src/app/api.js";
+import Logger from "../src/app/logger.js";
 
 const port = 5000;
 

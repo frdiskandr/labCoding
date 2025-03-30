@@ -18,7 +18,7 @@ export let options = {
 };
 
 export default function () {
-    let res = http.get('http://localhost:3002'); // Ganti dengan API Anda
+    let res = http.get('http://localhost:3000'); // Ganti dengan API Anda
     
     check(res, {
         'status is 200': (r) => r.status === 200,

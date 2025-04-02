@@ -9,16 +9,16 @@ export let options = {
         { duration: '10s', target: 1000 },
         { duration: '10s', target: 5000 },
         { duration: '10s', target: 10000 },
-        // { duration: '10s', target: 20000 },
-        // { duration: '10s', target: 30000 },
+        { duration: '10s', target: 20000 },
+        { duration: '10s', target: 30000 },
         // { duration: '10s', target: 40000 },
-        // { duration: '10s', target: 50000 }
+        // { duration: '10s', target: 50000 },
         
     ]
 };
 
 export default function () {
-    let res = http.get('http://localhost:3000'); // Ganti dengan API Anda
+    let res = http.get('http://localhost:3000/'); // Ganti dengan API Anda
     
     check(res, {
         'status is 200': (r) => r.status === 200,

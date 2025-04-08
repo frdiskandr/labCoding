@@ -6,8 +6,8 @@ type PersonI interface {
 	SayHelo() string
 }
 
-func sapa(p PersonI) {
-	fmt.Print("hello", p.SayHelo())
+func print(p PersonI) {
+	fmt.Print("hello dari sapa ", p.SayHelo())
 }
 
 type PersonT struct {
@@ -15,7 +15,18 @@ type PersonT struct {
 	age  int
 }
 
+type book struct {
+	id   int
+	name string
+}
+
+func (b book) SayHelo() string {
+	fmt.Println("")
+	return b.name
+}
+
 func (person PersonT) SayHelo() string {
+	fmt.Println("struck")
 	return person.name
 }
 
@@ -26,7 +37,12 @@ func main() {
 		age:  18,
 	}
 
-	fmt.Println(person)
+	print(person)
 
-	sapa(person)
+	book := book{
+		id:   1,
+		name: "book",
+	}
+
+	print(book)
 }

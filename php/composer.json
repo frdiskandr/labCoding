@@ -1,0 +1,15 @@
+{
+    "name": "farid/php",
+    "autoload": {
+        "psr-4": {
+            "Farid\\Php\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Farid iskandar",
+            "email": "fariditb159@gmail.com"
+        }
+    ],
+    "require": {}
+}
